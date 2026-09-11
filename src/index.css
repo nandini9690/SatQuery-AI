@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+/* =====================================================================
+   SatQuery AI — mission-control dark theme
+   User preference (authoritative in MASTER.md): dark OLED, cyan data
+   accents, amber warn/change, monospace readouts, satellite imagery.
+   ===================================================================== */
+
+@theme {
+  --font-sans: "Space Grotesk", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-heading: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --color-background: oklch(0.145 0.016 257);
+  --color-surface: oklch(0.20 0.024 258);
+  --color-surface-2: oklch(0.24 0.026 257);
+  --color-foreground: oklch(0.93 0.014 248);
+  --color-muted: oklch(0.66 0.025 250);
+  --color-border: oklch(0.29 0.024 257);
+  --color-primary: oklch(0.79 0.12 205);
+  --color-on-primary: oklch(0.17 0.03 258);
+  --color-secondary: oklch(0.74 0.11 192);
+  --color-accent: oklch(0.82 0.15 78);
+  --color-destructive: oklch(0.64 0.21 27);
+  --color-success: oklch(0.76 0.16 158);
+  --color-ring: oklch(0.79 0.12 205);
+
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+
+  --animate-fade-up: fade-up 300ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-fade-in: fade-in 200ms ease-out both;
+  --animate-blink: blink 1.1s steps(2, start) infinite;
+
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes blink {
+    to { visibility: hidden; }
+  }
+}
+
+/* ---------- base ---------- */
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+  background-image:
+    radial-gradient(ellipse 90% 60% at 50% -10%, oklch(0.3 0.09 250 / 0.22), transparent 60%),
+    radial-gradient(oklch(0.55 0.1 210 / 0.09) 1px, transparent 1px);
+  background-size:
+    100% 100%,
+    22px 22px;
+  background-attachment: fixed;
+}
+
+::selection {
+  background: oklch(0.79 0.12 205 / 0.32);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: oklch(0.35 0.03 257) transparent;
+}
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-thumb {
+  background: oklch(0.32 0.03 257);
+  border-radius: 8px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-ring);
+  outline-offset: 2px;
+}
+
+:where(button, [role="button"]) {
+  cursor: pointer;
+}
+
+/* press feedback — shared timing for all buttons */
+.btn-press {
+  transition: transform 160ms ease-out, background-color 160ms ease-out, border-color 160ms ease-out, color 160ms ease-out, opacity 160ms ease-out, box-shadow 200ms ease-out;
+}
+.btn-press:active {
+  transform: scale(0.97);
+}
+
+/* mission-control panel */
+.panel {
+  background: linear-gradient(180deg, oklch(0.215 0.024 258), oklch(0.185 0.022 258));
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+}
+
+.label-chip {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.readout {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.glow-cyan {
+  box-shadow: 0 0 0 1px oklch(0.79 0.12 205 / 0.35), 0 8px 32px -12px oklch(0.79 0.12 205 / 0.45);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
